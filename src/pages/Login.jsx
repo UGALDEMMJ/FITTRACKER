@@ -9,6 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate()
 
 
@@ -18,14 +19,20 @@ const Login = () => {
         setErrorMessage('');
 
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password
-            })
+            });
+
             if (error) {
-                setErrorMessage(error.message)
+                if(error.message == 'Email not confirmed'){
+                    setErrorMessage('Please check your email and click on the link to activate your account')
+                }else{
+                    setErrorMessage(error.message);
+                }
             } else {
-                console.log("Login existoso", data)
+                setSuccessMessage('Successfully logged in!');
+                setErrorMessage('');
             }
         } catch (error) {
             setErrorMessage('Unexpected error occurred. Please try again.');
@@ -54,7 +61,7 @@ const Login = () => {
                             <h1 className='text-center text-3xl font-bold text-black '>FITTRACKER</h1>
                         </header>
                         <div className='mb-8 space-y-3'>
-                            <p className='text-xl font-bold text-center my-10'>Login to start your weight tracking journey</p>
+                            <p className='text-xl font-semibold text-center my-10'>Login to start your weight <span className='text-yellow-500'>tracking</span> journey</p>
                         </div>
                         <div className="flex flex-rows items-center space-x-4">
                           
@@ -66,7 +73,7 @@ const Login = () => {
 
                         </div>
                         {errorMessage && <p className='text-red-500 text-center mb-4'>{errorMessage}</p>}
-
+                        {successMessage && <p className='text-green-500 text-center mb-4'>{successMessage}</p>}
                         <form className='w-full' onSubmit={handleSubmit}>
                             <div className='mb-10 space-y-3'>
                                 <div className='space-y-1'>
