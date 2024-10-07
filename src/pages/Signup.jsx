@@ -27,7 +27,7 @@ const Signup = () => {
     };
 
 
-    const handleEmailSignUp = async () => {
+    const handleEmailSignUp = async (e) => {
         e.preventDefault();
         setErrorMessage('');
         setSuccessMessage('');
@@ -36,7 +36,8 @@ const Signup = () => {
                 email,
                 password,
                 options: {
-                    emailRedirectTo: 'http://localhost:5173/success',
+                    emailRedirectTo: 'http://localhost:5173/userinfo',
+                    shouldCreateUser: true
                 }
             });
 

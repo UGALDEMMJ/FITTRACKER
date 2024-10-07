@@ -33,6 +33,7 @@ const Login = () => {
             } else {
                 setSuccessMessage('Successfully logged in!');
                 setErrorMessage('');
+                navigate('/userinfo');
             }
         } catch (error) {
             setErrorMessage('Unexpected error occurred. Please try again.');
