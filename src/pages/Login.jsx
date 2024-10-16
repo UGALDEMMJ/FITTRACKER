@@ -25,21 +25,38 @@ const Login = () => {
             });
 
             if (error) {
-                if(error.message == 'Email not confirmed'){
+                if (error.message == 'Email not confirmed') {
                     setErrorMessage('Please check your email and click on the link to activate your account')
-                }else{
+                } else {
                     setErrorMessage(error.message);
                 }
             } else {
                 setSuccessMessage('Successfully logged in!');
                 setErrorMessage('');
-                navigate('/userinfo');
+                checkUserStatus();
             }
         } catch (error) {
             setErrorMessage('Unexpected error occurred. Please try again.');
         }
 
     };
+
+    const checkUserStatus =async () => {
+        const {data, error} = await supabase
+        .from('users')
+        .select('id')
+
+        if(data[0].id){
+            navigate('/dashboard')
+        }else{
+            navigate('userinfo')
+        }
+
+        if (error) {
+            setErrorMessage(error.message);
+        } 
+        setErrorMessage('');
+    }
 
     const handleGithubSignUp = async () => {
         const { user, session, error } = await supabase.auth.signInWithOAuth({
@@ -57,7 +74,7 @@ const Login = () => {
         <>
             <div className='bg-white'>
                 <div className='flex h-screen flex-col items-center justify-center bg-gray-100'>
-                    <div className='w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg'>
+                    <div className='max-w-md sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg'>
                         <header className='rounded-t-lg bg-yellow-500 p-4'>
                             <h1 className='text-center text-3xl font-bold text-black '>FITTRACKER</h1>
                         </header>
@@ -65,7 +82,7 @@ const Login = () => {
                             <p className='text-xl font-semibold text-center my-10'>Login to start your weight <span className='text-yellow-500'>tracking</span> journey</p>
                         </div>
                         <div className="flex flex-rows items-center space-x-4">
-                          
+
                             <AuthButton
                                 onClick={handleGithubSignUp}
                                 icon={FaGithub}

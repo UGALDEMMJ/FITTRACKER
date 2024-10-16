@@ -56,12 +56,12 @@ const Signup = () => {
         <>
             <div className='bg-white'>
                 <div className='flex h-screen flex-col items-center justify-center bg-gray-100'>
-                    <div className='w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg'>
+                    <div className='max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg'>
                         <header className='rounded-t-lg bg-yellow-500 p-4'>
                             <h1 className='text-center text-3xl font-bold text-black '>FITTRACKER</h1>
                         </header>
                         <div className='mb-8 space-y-3'>
-                            <p className='text-xl font-semibold text-center my-10'>Complete the form, we will send you a link to activate your <span className='text-yellow-500'>account</span></p>
+                            <p className='text-xl font-semibold text-center my-10 break-words'>Complete the form, we will send you a link to activate your <span className='text-yellow-500'>account</span></p>
                         </div>
                         <div className="flex flex-rows items-center space-x-4">
 
